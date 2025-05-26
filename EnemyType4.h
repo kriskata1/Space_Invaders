@@ -3,7 +3,6 @@
 #define ENEMYTYPE4_H
 #include "enemy.h"
 
-
 class EnemyType4 : public Enemy{
 public:
     EnemyType4(int x, int y);

@@ -3,7 +3,6 @@
 #define ENEMY_H
 #include "gameObject.h"
 
-
 class Enemy: public GameObject {
 public:
     Enemy();

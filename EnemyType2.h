@@ -10,5 +10,4 @@ public:
 };
 
 
-
 #endif //ENEMYTYPE2_H
