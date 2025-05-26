@@ -1,6 +1,3 @@
-//
-// Created by Kris on 24.05.2025.
-//
 
 #ifndef ENEMYTYPE4_H
 #define ENEMYTYPE4_H
@@ -10,9 +7,6 @@
 class EnemyType4 : public Enemy{
 public:
     EnemyType4(int x, int y);
-
-    // void update() override;
-    // void render() override;
 };
 
 
