@@ -1,11 +1,10 @@
-//
-// Created by Kris on 24.05.2025.
-//
+
 
 #ifndef GAME_H
 #define GAME_H
 #include <vector>
-
+#include <conio.h>
+#include <windows.h>
 #include "player.h"
 
 
@@ -18,6 +17,8 @@ public:
     void render();
     void run();
 
+    void checkLevel();
+
     Game();
     virtual ~Game();
 
@@ -27,6 +28,8 @@ private:
     std::vector<GameObject*> bullets;
     int score, level;
     bool running;
+    int enemyMove;
+    int enemyShoot;
 
 };
 
