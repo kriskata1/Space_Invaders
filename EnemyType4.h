@@ -7,7 +7,7 @@
 
 class EnemyType4 : public Enemy{
 public:
-    EnemyType4(int x, int y);
+    EnemyType4(double x, double y);
 
     // void update() override;
     // void render() override;

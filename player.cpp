@@ -2,10 +2,10 @@
 
 #include "bullet.h"
 
-extern void draw_char(char ch, int y, int x, COLORS foreground, COLORS background);
+extern void draw_char(char ch, double y, double x, COLORS foreground, COLORS background);
 
-Player::Player():GameObject(40, 22, 'O', RED), lives(3), score(0) {}
-Player::Player(int x, int y, char symbol, COLORS color, int lives, int score) :GameObject(x, y, symbol, color), lives(lives), score(score) {}
+Player::Player():GameObject(60, 28, 193, LIGHT_GREEN), lives(3), score(0) {}
+Player::Player(double x, double y, char symbol, COLORS color, int lives, int score) :GameObject(x, y, symbol, color), lives(lives), score(score) {}
 Player::Player(const Player &other):GameObject(other), lives(other.lives), score(other.score) {}
 Player::Player(Player &&other) noexcept : GameObject(std::move(other)), lives(other.lives), score(other.score) {}
 
@@ -35,7 +35,7 @@ void Player::moveLeft() {
 }
 
 void Player::moveRight() {
-    if (getX() < 79) setX(getX()+1);
+    if (getX() < 117) setX(getX()+1);
 }
 
 void Player::shoot(std::vector<GameObject*>& bullets) {

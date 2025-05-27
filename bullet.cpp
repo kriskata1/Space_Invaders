@@ -2,10 +2,10 @@
 
 #include "player.h"
 
-extern void draw_char(char ch, int y, int x, COLORS foreground, COLORS background);
+extern void draw_char(char ch, double y, double x, COLORS foreground, COLORS background);
 
 Bullet::Bullet():GameObject(0,0,' ',BLACK), direction(-1){}
-Bullet::Bullet(int x, int y, char symbol, COLORS color, int direction) : GameObject(x, y, (direction == -1) ? '|' : '*', WHITE), direction(direction) {} //default
+Bullet::Bullet(double x, double y, char symbol, COLORS color, int direction) : GameObject(x, y, (direction == -1) ? '|' : '*', WHITE), direction(direction) {} //default
 Bullet::Bullet(const Bullet& other) : GameObject(other), direction(other.direction) {} //copy
 Bullet::Bullet(Bullet&& other) noexcept : GameObject(std::move(other)), direction(other.direction) {}
 

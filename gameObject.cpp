@@ -4,8 +4,8 @@
 
 GameObject::~GameObject() = default;
 
-GameObject::GameObject():x(0), y(0), symbol(' '), color(WHITE) {}
-GameObject::GameObject(int x, int y, char symbol, COLORS color) : x(x), y(y), symbol(symbol), color(color){}
+GameObject::GameObject():x(0.0), y(0.0), symbol(' '), color(WHITE) {}
+GameObject::GameObject(double x, double y, char symbol, COLORS color) : x(x), y(y), symbol(symbol), color(color){}
 GameObject::GameObject(const GameObject &other) : x(other.x), y(other.y), symbol(other.symbol), color(other.color){}
 GameObject::GameObject(GameObject &&other) noexcept {
     this->x = other.x;

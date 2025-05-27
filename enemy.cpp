@@ -1,10 +1,10 @@
 
 #include "enemy.h"
 
-extern void draw_char(char ch, int y, int x, COLORS foreground, COLORS background);
+extern void draw_char(char ch, double y, double x, COLORS foreground, COLORS background);
 
 Enemy::Enemy():GameObject(0,0,' ',BLACK), direction(1), points(10) {}
-Enemy::Enemy(int x, int y, char symbol, COLORS color, int points) : GameObject(x, y, symbol, color), points(points) {
+Enemy::Enemy(double x, double y, char symbol, COLORS color, int points) : GameObject(x, y, symbol, color), points(points) {
     direction = 1;
 }
 Enemy::Enemy(const Enemy &other) : GameObject(other), direction(other.direction), points(other.points) {}
@@ -32,10 +32,12 @@ Enemy &Enemy::operator=(Enemy &&other) noexcept {
 
 void Enemy::update() {
     setX(getX() + direction);
+    int cmdWidthMin = 0;
+    int cmdWidthMax = 117;
 
-    if (getX() <= 0 || getX() >= 79) {
-        direction = direction * (-1);
-        // setY(getY() + 1); //dvijenie nadolu
+    if (getX() <= cmdWidthMin || getX() >= cmdWidthMax) { //кара врагът да се движи на ляво или дясно ако прехвърли граници
+        direction = direction * (-1); //сменя посоката
+        setY(getY() + 1);   //кара връагът да се движи надолу с 1, когато стигне граници
     }
 }
 

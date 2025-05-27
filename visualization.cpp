@@ -4,7 +4,7 @@
 HANDLE hConsoleOutput = ::GetStdHandle(STD_OUTPUT_HANDLE);
 
 
-void draw_char(char ch, int y, int x, COLORS foreground_color, COLORS background_color) {
+void draw_char(char ch, double y, double x, COLORS foreground_color, COLORS background_color) {
     CHAR_INFO ch_info;
     ch_info.Char.AsciiChar = ch;
     ch_info.Attributes = foreground_color | (background_color << 4);

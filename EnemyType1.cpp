@@ -2,4 +2,4 @@
 
 #include "EnemyType1.h"
 
-EnemyType1::EnemyType1(int x, int y): Enemy(x, y, '1', LIGHT_GREEN, 10) {}
+EnemyType1::EnemyType1(double x, double y): Enemy(x, y, 004, WHITE, 10) {}

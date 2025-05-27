@@ -3,10 +3,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include <vector>
-#include <conio.h>
-#include <windows.h>
 #include "player.h"
-
 
 class Game {
 public:
@@ -18,6 +15,8 @@ public:
     void run();
 
     void checkLevel();
+    void cls();
+    void setCursorPosition(int x, int y);
 
     Game();
     virtual ~Game();

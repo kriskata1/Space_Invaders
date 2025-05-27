@@ -7,7 +7,7 @@
 class Player : public GameObject{
 public:
     Player();
-    Player(int x, int y, char symbol, COLORS color, int lives, int score);
+    Player(double x, double y, char symbol, COLORS color, int lives, int score);
     Player(const Player &other); //copy
     Player(Player &&other) noexcept; //move
 

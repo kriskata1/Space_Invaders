@@ -3,7 +3,7 @@
 class Bullet : public GameObject {
 public:
     Bullet();
-    Bullet(int x, int y, char symbol, COLORS color, int direction);
+    Bullet(double x, double y, char symbol, COLORS color, int direction);
     Bullet(const Bullet &other); //copy
     Bullet(Bullet &&other) noexcept ; //move
 

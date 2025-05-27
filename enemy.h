@@ -8,7 +8,7 @@
 class Enemy: public GameObject {
 public:
     Enemy();
-    Enemy(int x, int y, char symbol, COLORS color, int points);
+    Enemy(double x, double y, char symbol, COLORS color, int points);
     Enemy(const Enemy &other); //copy
     Enemy(Enemy &&other) noexcept; //move
 

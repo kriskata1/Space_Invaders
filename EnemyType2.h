@@ -6,7 +6,7 @@
 
 class EnemyType2 : public Enemy{
 public:
-    EnemyType2(int x, int y);
+    EnemyType2(double x, double y);
 };
 
 

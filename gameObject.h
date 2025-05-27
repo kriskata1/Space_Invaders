@@ -27,7 +27,7 @@ enum COLORS {
 class GameObject {
 public:
     GameObject();
-    GameObject(int x, int y, char symbol, COLORS color);
+    GameObject(double x, double y, char symbol, COLORS color);
     GameObject(const GameObject &other); //copy
     GameObject(GameObject &&other) noexcept; //move
 
@@ -56,7 +56,7 @@ public:
     void setColor(COLORS color);
 
 private:
-    int x,y; //koordinati
+    double x,y; //koordinati
     char symbol; //vizualen simvol
     COLORS color; //cvqt na simvola
 };
