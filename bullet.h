@@ -1,5 +1,4 @@
 #include "gameObject.h"
-#include "gameObject.cpp"
 
 class Bullet : public GameObject {
 public:
@@ -14,6 +13,8 @@ public:
     //metodi
     void update() override;
     void render() override;
+
+    int getDirection() const;
 
 private:
     int direction;

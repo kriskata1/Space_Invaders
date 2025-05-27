@@ -31,13 +31,13 @@ public:
     GameObject(const GameObject &other); //copy
     GameObject(GameObject &&other) noexcept; //move
 
-    virtual ~GameObject() = default;
+    virtual ~GameObject();
 
     GameObject& operator=(const GameObject& other);
     GameObject& operator=(GameObject&& other) noexcept;
 
-    virtual void update();
-    virtual void render(); //zapisvane na poziciq(vizualizaciq)
+    virtual void update() = 0;
+    virtual void render() = 0; //zapisvane na poziciq(vizualizaciq)
 
     int getX() const;
 
@@ -51,7 +51,7 @@ public:
 
     void setSymbol(char symbol);
 
-    COLORS getColor() const;
+    [[nodiscard]] COLORS getColor() const;
 
     void setColor(COLORS color);
 

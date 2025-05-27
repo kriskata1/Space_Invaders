@@ -109,6 +109,12 @@ build CMakeFiles/Project.dir/EnemyType4.cpp.obj: CXX_COMPILER__Project_unscanned
   OBJECT_DIR = CMakeFiles\Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Project.dir
 
+build CMakeFiles/Project.dir/visualization.cpp.obj: CXX_COMPILER__Project_unscanned_Debug C$:/Users/Kris/Desktop/uni$ c++/nbu/OOP/project/Project$ (1)/Project/visualization.cpp || cmake_object_order_depends_target_Project
+  DEP_FILE = CMakeFiles\Project.dir\visualization.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Project.dir
+  OBJECT_FILE_DIR = CMakeFiles\Project.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Project
@@ -117,7 +123,7 @@ build CMakeFiles/Project.dir/EnemyType4.cpp.obj: CXX_COMPILER__Project_unscanned
 #############################################
 # Link the executable Project.exe
 
-build Project.exe: CXX_EXECUTABLE_LINKER__Project_Debug CMakeFiles/Project.dir/player.cpp.obj CMakeFiles/Project.dir/bullet.cpp.obj CMakeFiles/Project.dir/gameObject.cpp.obj CMakeFiles/Project.dir/enemy.cpp.obj CMakeFiles/Project.dir/main.cpp.obj CMakeFiles/Project.dir/Game.cpp.obj CMakeFiles/Project.dir/EnemyType1.cpp.obj CMakeFiles/Project.dir/EnemyType2.cpp.obj CMakeFiles/Project.dir/EnemyType3.cpp.obj CMakeFiles/Project.dir/EnemyType4.cpp.obj
+build Project.exe: CXX_EXECUTABLE_LINKER__Project_Debug CMakeFiles/Project.dir/player.cpp.obj CMakeFiles/Project.dir/bullet.cpp.obj CMakeFiles/Project.dir/gameObject.cpp.obj CMakeFiles/Project.dir/enemy.cpp.obj CMakeFiles/Project.dir/main.cpp.obj CMakeFiles/Project.dir/Game.cpp.obj CMakeFiles/Project.dir/EnemyType1.cpp.obj CMakeFiles/Project.dir/EnemyType2.cpp.obj CMakeFiles/Project.dir/EnemyType3.cpp.obj CMakeFiles/Project.dir/EnemyType4.cpp.obj CMakeFiles/Project.dir/visualization.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Project.dir

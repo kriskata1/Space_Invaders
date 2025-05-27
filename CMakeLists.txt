@@ -21,4 +21,5 @@ add_executable(Project player.cpp
         EnemyType3.cpp
         EnemyType3.h
         EnemyType4.cpp
-        EnemyType4.h)
+        EnemyType4.h
+        visualization.cpp)

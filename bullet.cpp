@@ -4,8 +4,8 @@
 
 extern void draw_char(char ch, int y, int x, COLORS foreground, COLORS background);
 
-Bullet::Bullet():GameObject(), direction(0){}
-Bullet::Bullet(int x, int y, char symbol, COLORS color, int direction) : GameObject(x, y, symbol, color), direction(direction) {} //default
+Bullet::Bullet():GameObject(0,0,' ',BLACK), direction(-1){}
+Bullet::Bullet(int x, int y, char symbol, COLORS color, int direction) : GameObject(x, y, (direction == -1) ? '|' : '*', WHITE), direction(direction) {} //default
 Bullet::Bullet(const Bullet& other) : GameObject(other), direction(other.direction) {} //copy
 Bullet::Bullet(Bullet&& other) noexcept : GameObject(std::move(other)), direction(other.direction) {}
 
@@ -30,6 +30,12 @@ Bullet &Bullet::operator=(Bullet &&other) noexcept {
 
 void Bullet::update() {
     setY(getY() + direction);
+}
+
+//out of bounds?
+
+int Bullet::getDirection() const {
+    return direction;
 }
 
 void Bullet::render() {

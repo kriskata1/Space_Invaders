@@ -18,6 +18,8 @@ public:
     void render();
     void run();
 
+    void checkLevel();
+
     Game();
     virtual ~Game();
 

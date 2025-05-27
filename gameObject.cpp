@@ -1,6 +1,9 @@
 
 #include "gameObject.h"
 
+
+GameObject::~GameObject() = default;
+
 GameObject::GameObject():x(0), y(0), symbol(' '), color(WHITE) {}
 GameObject::GameObject(int x, int y, char symbol, COLORS color) : x(x), y(y), symbol(symbol), color(color){}
 GameObject::GameObject(const GameObject &other) : x(other.x), y(other.y), symbol(other.symbol), color(other.color){}
@@ -33,10 +36,6 @@ GameObject &GameObject::operator=(GameObject &&other) noexcept {
     return *this;
 }
 
-
-void GameObject::render() {
-    draw_char(symbol,y,x,color,COLORS::WHITE);
-}
 
 int GameObject::getX() const {
     return x;

@@ -4,7 +4,7 @@
 
 extern void draw_char(char ch, int y, int x, COLORS foreground, COLORS background);
 
-Player::Player():GameObject(), lives(0), score(0) {}
+Player::Player():GameObject(40, 22, 'O', RED), lives(3), score(0) {}
 Player::Player(int x, int y, char symbol, COLORS color, int lives, int score) :GameObject(x, y, symbol, color), lives(lives), score(score) {}
 Player::Player(const Player &other):GameObject(other), lives(other.lives), score(other.score) {}
 Player::Player(Player &&other) noexcept : GameObject(std::move(other)), lives(other.lives), score(other.score) {}
