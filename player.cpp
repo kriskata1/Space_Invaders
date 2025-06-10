@@ -9,7 +9,7 @@ Player::Player(double x, double y, char symbol, COLORS color, int lives, int sco
 Player::Player(const Player &other):GameObject(other), lives(other.lives), score(other.score) {}
 Player::Player(Player &&other) noexcept : GameObject(std::move(other)), lives(other.lives), score(other.score) {}
 
-Player &Player::operator=(const Player &other) {
+Player &Player::operator=(const Player &other) {    //copy
     if (this != &other) {
         GameObject::operator=(other);
         lives = other.lives;
@@ -19,7 +19,7 @@ Player &Player::operator=(const Player &other) {
     return *this;
 }
 
-Player &Player::operator=(Player &&other) noexcept {
+Player &Player::operator=(Player &&other) noexcept {    //move
     if (this != &other) {
         GameObject::operator=(std::move(other));
         lives = other.lives;

@@ -9,7 +9,7 @@ Bullet::Bullet(double x, double y, char symbol, COLORS color, int direction) : G
 Bullet::Bullet(const Bullet& other) : GameObject(other), direction(other.direction) {} //copy
 Bullet::Bullet(Bullet&& other) noexcept : GameObject(std::move(other)), direction(other.direction) {}
 
-Bullet &Bullet::operator=(const Bullet& other) {
+Bullet &Bullet::operator=(const Bullet& other) {    //copy
     if (this != &other) {
         GameObject::operator=(other);
         direction = other.direction;
@@ -18,7 +18,7 @@ Bullet &Bullet::operator=(const Bullet& other) {
     return *this;
 }
 
-Bullet &Bullet::operator=(Bullet &&other) noexcept {
+Bullet &Bullet::operator=(Bullet &&other) noexcept {    //move
     if (this != &other) {
         GameObject::operator=(std::move(other));
         direction = other.direction;

@@ -23,7 +23,7 @@ Game::~Game() {
     }
 }
 
-//rendering
+//изчиства екрана на cmd
 void Game::clearScreen() {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD coord = {0, 0};
@@ -33,7 +33,7 @@ void Game::clearScreen() {
     SetConsoleCursorPosition(hConsole, coord);
 }
 
-void Game::render() {
+void Game::render() { //показва точки, животи и ниво на играча и визуализира патрони, играч и противник
     clearScreen();
     std::cout << "Score: " << player.getScore() << " Lives: " << player.getLives() << " Level: " << level << std::endl;
     player.render();
@@ -50,10 +50,7 @@ void Game::render() {
     }
 }
 
-//rendering
-
-//run i update
-void Game::run() {
+void Game::run() {  //показва началните и крайните надписи на играта и се грижи за изпълнението на input, update и render
     clearScreen();
     std::cout << "\n\n\n";
     std::cout << "\n \n \t \t \t \t \t \t PLAY\n";
@@ -87,12 +84,32 @@ void Game::run() {
     }
 }
 
-void Game::update() {
+void Game::update() {   //прави движението на противниците надолу когато стигнат граници, както и патроните
     countUpdates++;
     enemyBulletCounter++;
 
     if (countUpdates >= speedInMs) {
-        for (auto *enemy: enemies) {
+        bool hitLeft = false;
+        bool hitRight = false;
+
+        for (auto* enemy : enemies) {
+            int enemyX = enemy->getX();
+            if (enemyX <= 0) hitLeft = true;
+            if (enemyX >= 117) hitRight = true;
+        }
+
+        if (hitLeft || hitRight) {
+            int newDir = hitLeft ? 1 : -1;
+            for (auto* enemy : enemies) {
+                Enemy* dynEnemy = dynamic_cast<Enemy*>(enemy);
+                if (dynEnemy) {
+                    dynEnemy->setDirection(newDir);
+                    dynEnemy->setY(dynEnemy->getY() + 1);
+                }
+            }
+        }
+
+        for (auto* enemy : enemies) {
             enemy->update();
         }
 
@@ -115,9 +132,7 @@ void Game::update() {
     checkCollisions();
 }
 
-//run i update
-
-void Game::input() {
+void Game::input() {    //грижи се за засичането на натиснатите клавиши от клавиатурата за да се изпълняват командите на играча
     static int shootCooldown = 0;
 
     if (GetAsyncKeyState('A') & 0x8000) {
@@ -154,6 +169,7 @@ void Game::input() {
     }
 }
 
+//прави проверки за нивата и точките на играча и забързва противниците и патроните им спрямо нивото
 void Game::checkLevelAndWinConditions() {
     if (level == 1 && player.getScore() >= 200) {
         level = 2;
@@ -178,16 +194,17 @@ void Game::checkLevelAndWinConditions() {
         if (level < 3) {
             ++level;
             initializeEnemies();
-        } else {
+        } else {    //ако няма останали противници играчът печели
             clearScreen();
             std::cout << "\n \n \t \t \t \t \t \t YOU WIN!\n";
             std::cout << "\n \n \t \t \t \t \t \t Final Score: " << player.getScore() << "\n";
+
             _getch();
         }
     }
 }
 
-void Game::initializeEnemies() {
+void Game::initializeEnemies() {    //позиционира противниците на началната им позиция
     enemies.clear();
     double initialY = 2.0;
     int x = 0;
@@ -221,11 +238,11 @@ void Game::enemyShooting() {
     enemyShootCooldown--;
 
     if (enemyShootCooldown <= 0 && !enemies.empty()) {
-        // random enemy da strelq
+        // random enemy да стреля
         int randomIndex = rand() % enemies.size();
         std::vector<GameObject *>::value_type shootingEnemy = enemies[randomIndex];
 
-        //enemy bullet da se dviji nadolu
+        //enemy bullet да се движи надолу
         Bullet *enemyBullet = new Bullet(shootingEnemy->getX(), shootingEnemy->getY() + 1, '*', WHITE, 1);
         enemyBullets.push_back(enemyBullet);
 

@@ -10,7 +10,7 @@ Enemy::Enemy(double x, double y, char symbol, COLORS color, int points) : GameOb
 Enemy::Enemy(const Enemy &other) : GameObject(other), direction(other.direction), points(other.points) {}
 Enemy::Enemy(Enemy &&other) noexcept : GameObject(std::move(other)), direction(other.direction), points(other.points) {}
 
-Enemy &Enemy::operator=(const Enemy &other) {
+Enemy &Enemy::operator=(const Enemy &other) {   //copy
     if (this != &other) {
         GameObject::operator=(other);
         direction = other.direction;
@@ -20,7 +20,7 @@ Enemy &Enemy::operator=(const Enemy &other) {
     return *this;
 }
 
-Enemy &Enemy::operator=(Enemy &&other) noexcept {
+Enemy &Enemy::operator=(Enemy &&other) noexcept {   //move
     if (this != &other) {
         GameObject::operator=(std::move(other));
         direction = other.direction;
@@ -37,7 +37,6 @@ void Enemy::update() {
 
     if (getX() <= cmdWidthMin || getX() >= cmdWidthMax) { //кара врагът да се движи на ляво или дясно ако прехвърли граници
         direction = direction * (-1); //сменя посоката
-        // setY(getY() + 1);   //кара връагът да се движи надолу с 1, когато стигне граници
     }
 }
 
