@@ -68,4 +68,3 @@ COLORS GameObject::getColor() const {
 void GameObject::setColor(COLORS color) {
     this->color = color;
 }
-

@@ -32,8 +32,6 @@ void Bullet::update() {
     setY(getY() + direction);
 }
 
-//out of bounds?
-
 int Bullet::getDirection() const {
     return direction;
 }

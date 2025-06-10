@@ -55,6 +55,7 @@ public:
 
     void setColor(COLORS color);
 
+
 private:
     double x,y; //koordinati
     char symbol; //vizualen simvol

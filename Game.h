@@ -2,8 +2,17 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include <conio.h>
+#include <windows.h>
 #include <vector>
+#include "enemy.h"
 #include "player.h"
+#include "bullet.h"
+#include<cmath>
+#include "EnemyType1.h"
+#include "EnemyType2.h"
+#include "EnemyType3.h"
+#include "EnemyType4.h"
 
 class Game {
 public:
@@ -14,21 +23,33 @@ public:
     void render();
     void run();
 
-    void checkLevel();
-    void cls();
-    void setCursorPosition(int x, int y);
+    void checkLevelAndWinConditions();
+    bool isColliding(double x1, double y1, double x2, double y2, double hitbox = 1.0);
+    void enemyShooting();
+
+    void clearScreen();
+    HANDLE hConsole;
 
     Game();
     virtual ~Game();
 
+
+
 private:
     Player player;
     std::vector<GameObject*> enemies;
+    std::vector<Bullet*> enemyBullets;
     std::vector<GameObject*> bullets;
     int score, level;
     bool running;
     int enemyMove;
     int enemyShoot;
+    bool bonusLifeGiven = false;
+    int enemyShootCooldown = 0;
+    int enemyBulletCounter = 0;
+    int enemyBulletSpeed = 5;
+
+    char screenBuffer[90][117];
 
 };
 
