@@ -27,7 +27,7 @@ public:
     bool isColliding(double x1, double y1, double x2, double y2, double hitbox = 1.0);
     void enemyShooting();
 
-    void clearScreen();
+    static void clearScreen();
     HANDLE hConsole;
 
     Game();
@@ -45,9 +45,9 @@ private:
     int enemyMove;
     int enemyShoot;
     bool bonusLifeGiven = false;
-    int enemyShootCooldown = 0;
-    int enemyBulletCounter = 0;
-    int enemyBulletSpeed = 5;
+    int enemyShootCooldown = 0; //timer към следващия патрон(кога се създават)
+    int enemyBulletCounter = 0; //бързина на патрони(брои frameovete)
+    int enemyBulletFrequency = 5; //threshold на колко фрейма се активира бързината
 
     char screenBuffer[90][117];
 

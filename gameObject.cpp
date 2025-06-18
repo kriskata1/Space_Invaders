@@ -14,7 +14,7 @@ GameObject::GameObject(GameObject &&other) noexcept {
     this->color = other.color;
 }
 
-GameObject& GameObject::operator=(const GameObject& other) {    //copy
+GameObject& GameObject::operator=(const GameObject& other) {    //оператор за копиране
     if (this != &other) {
         x = other.x;
         y = other.y;
@@ -25,7 +25,7 @@ GameObject& GameObject::operator=(const GameObject& other) {    //copy
     return *this;
 }
 
-GameObject &GameObject::operator=(GameObject &&other) noexcept {    //move
+GameObject &GameObject::operator=(GameObject &&other) noexcept {    //оператор за присвояване
     if (this != &other) {
         x = other.x;
         y = other.y;

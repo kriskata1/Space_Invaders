@@ -1,7 +1,7 @@
 #include "Game.h"
 
 int countUpdates = 0;
-int speedInMs = 15;
+int speedInMs = 15; //бързина на движение на enemy-ta
 
 extern void draw_char(char ch, double y, double x, COLORS foreground, COLORS background);
 
@@ -29,7 +29,7 @@ void Game::clearScreen() {
     COORD coord = {0, 0};
     SetConsoleCursorPosition(hConsole, coord);
 
-    std::cout << std::string(117 * 90, ' ');
+    std::cout << std::string(117 * 50, ' ');
     SetConsoleCursorPosition(hConsole, coord);
 }
 
@@ -60,8 +60,8 @@ void Game::run() {  //показва началните и крайните на
     std::cout << "\n \n \t \t \t \t \t \t TO PLAY PRESS ENTER\n";
 
     while (true) {
-        if (_kbhit() && _getch() == 13) {
-            running = true;
+        if (_kbhit() && _getch() == 13) { //проверка за натискане на ключ на който се връща ASCII кода му
+            running = true; //започване
             break;
         }
     }
@@ -79,14 +79,14 @@ void Game::run() {  //показва началните и крайните на
             std::cout << std::endl;
             std::cout << "\n \n \t \t \t \t \t \t Final Score: " << player.getScore() << "\n";
             std::cout << std::endl;
-            _getch();
+            _getch(); //pause
         }
     }
 }
 
 void Game::update() {   //прави движението на противниците надолу когато стигнат граници, както и патроните
     countUpdates++;
-    enemyBulletCounter++;
+    enemyBulletCounter++; //frames
 
     if (countUpdates >= speedInMs) {
         bool hitLeft = false;
@@ -103,8 +103,8 @@ void Game::update() {   //прави движението на противни�
             for (auto* enemy : enemies) {
                 Enemy* dynEnemy = dynamic_cast<Enemy*>(enemy);
                 if (dynEnemy) {
-                    dynEnemy->setDirection(newDir);
-                    dynEnemy->setY(dynEnemy->getY() + 1);
+                    dynEnemy->setDirection(newDir); //обръщане на посока
+                    dynEnemy->setY(dynEnemy->getY() + 1); //слиза надолу
                 }
             }
         }
@@ -120,11 +120,12 @@ void Game::update() {   //прави движението на противни�
         bullet->update();
     }
 
-    if (enemyBulletCounter >= enemyBulletSpeed) {
+    //намаляме бързината на патроните
+    if (enemyBulletCounter >= enemyBulletFrequency) { //enemy bullets се движат само като стигнат колко често стреля enemy-to
         for (auto *bullet: enemyBullets) {
             bullet->update();
         }
-        enemyBulletCounter = 0;
+        enemyBulletCounter = 0; //delay-a в бързината на bullets се resetva
     }
 
     checkLevelAndWinConditions();
@@ -135,23 +136,23 @@ void Game::update() {   //прави движението на противни�
 void Game::input() {    //грижи се за засичането на натиснатите клавиши от клавиатурата за да се изпълняват командите на играча
     static int shootCooldown = 0;
 
-    if (GetAsyncKeyState('A') & 0x8000) {
+    if (GetAsyncKeyState('A') & 0x8000) { //проверка дали се натиска и задържа бутона
         player.moveLeft();
     }
 
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+    if (GetAsyncKeyState(VK_LEFT) & 0x8000) { //проверка дали се натиска и задържа бутона
         player.moveLeft();
     }
 
-    if (GetAsyncKeyState('D') & 0x8000) {
+    if (GetAsyncKeyState('D') & 0x8000) { //проверка дали се натиска и задържа бутона
         player.moveRight();
     }
 
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) { //проверка дали се натиска и задържа бутона
         player.moveRight();
     }
 
-    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) { //проверка дали се натиска и задържа бутона
         if (shootCooldown <= 0) {
             player.shoot(bullets);
             shootCooldown = 15; //на всеки 15 кадъра в секунда стреля
@@ -174,13 +175,13 @@ void Game::checkLevelAndWinConditions() {
     if (level == 1 && player.getScore() >= 200) {
         level = 2;
         speedInMs = 5;
-        enemyBulletSpeed = 3;
-        enemyBulletCounter = 50 + rand() % 60;
+        enemyBulletFrequency = 3; //колко често се движат
+        enemyBulletCounter = 50 + rand() % 60; //колко бързо се движат в кадъри
         initializeEnemies();
     } else if (level == 2 && player.getScore() >= 500) {
         level = 3;
         speedInMs = 2;
-        enemyBulletSpeed = 1;
+        enemyBulletFrequency = 1;
         enemyBulletCounter = 30 + rand() % 30;
         initializeEnemies();
     }
@@ -198,8 +199,7 @@ void Game::checkLevelAndWinConditions() {
             clearScreen();
             std::cout << "\n \n \t \t \t \t \t \t YOU WIN!\n";
             std::cout << "\n \n \t \t \t \t \t \t Final Score: " << player.getScore() << "\n";
-
-            _getch();
+            _getch(); //pause
         }
     }
 }
@@ -240,15 +240,27 @@ void Game::enemyShooting() {
     if (enemyShootCooldown <= 0 && !enemies.empty()) {
         // random enemy да стреля
         int randomIndex = rand() % enemies.size();
-        std::vector<GameObject *>::value_type shootingEnemy = enemies[randomIndex];
+        GameObject* shootingEnemy = enemies[randomIndex];
 
-        //enemy bullet да се движи надолу
+        //enemy bullet да се движи надолу от позицията си
         Bullet *enemyBullet = new Bullet(shootingEnemy->getX(), shootingEnemy->getY() + 1, '*', WHITE, 1);
         enemyBullets.push_back(enemyBullet);
 
+        //loop за няколко врагове да стрелят
+        // int numberOfShooters = std::min(1, (int)enemies.size()); // максимум 1 да стреля
+        // for (int i = 0; i < numberOfShooters; i++) {
+        //     int randomIndex = rand() % enemies.size();
+        //     GameObject* shootingEnemy = enemies[randomIndex];
+        //
+        //     //enemy bullet да се движи надолу от позицията си
+        //     Bullet *enemyBullet = new Bullet(shootingEnemy->getX(), shootingEnemy->getY() + 1, '*', WHITE, 1);
+        //     enemyBullets.push_back(enemyBullet);
+        // }
+
+        //reset cooldown-a
         if (level == 1) enemyShootCooldown = 60 + (rand() % 60);
-        else if (level == 2) enemyShootCooldown = 40 + (rand() % 40);
-        else if (level == 3) enemyShootCooldown = 20 + (rand() % 20);
+        else if (level == 2) enemyShootCooldown = 30 + (rand() % 40);
+        else if (level == 3) enemyShootCooldown = 10 + (rand() % 20);
     }
 }
 
@@ -259,15 +271,15 @@ void Game::checkCollisions() {
         bool bulletHit = false;
 
         for (auto enemyIt = enemies.begin(); enemyIt != enemies.end();) {
-            // tesvane na dokosvane na bulleti s enemy
+            // testvane na dokosvane na bulleti s enemy
             if (isColliding((*bulletIt)->getX(), (*bulletIt)->getY(),
                             (*enemyIt)->getX(), (*enemyIt)->getY())) {
 
-                int points = 0;
-                if (dynamic_cast<EnemyType1*>(*enemyIt)) points = 10;
-                if (dynamic_cast<EnemyType2*>(*enemyIt)) points = 20;
-                else if (dynamic_cast<EnemyType3*>(*enemyIt)) points = 30;
-                else if (dynamic_cast<EnemyType4*>(*enemyIt)) points = 40;
+                int points = dynamic_cast<Enemy*>(*enemyIt)->getPoints();
+                // if (dynamic_cast<EnemyType1*>(*enemyIt)) points = 10;
+                // if (dynamic_cast<EnemyType2*>(*enemyIt)) points = 20;
+                // if (dynamic_cast<EnemyType3*>(*enemyIt)) points = 30;
+                // if (dynamic_cast<EnemyType4*>(*enemyIt)) points = 40;
                 player.setScore(player.getScore() + points);
 
                 delete *enemyIt;
@@ -279,15 +291,16 @@ void Game::checkCollisions() {
                 bulletHit = true;
                 break;
             } else {
-                ++enemyIt;
+                ++enemyIt; //минаване към следващ враг ако този няма collision
             }
         }
 
         if (!bulletHit) {
-            ++bulletIt;
+            ++bulletIt; //минаване към следващ патрон
         }
     }
 
+    //проверка за докосване на вражески патрони към играча
     for (auto bulletIt = enemyBullets.begin(); bulletIt != enemyBullets.end();) {
         if (isColliding((*bulletIt)->getX(), (*bulletIt)->getY(),
                         player.getX(), player.getY())) {
@@ -322,11 +335,20 @@ void Game::checkCollisions() {
             ++bulletIt;
         }
     }
+
+    for (auto bulletIt = enemyBullets.begin(); bulletIt != enemyBullets.end();) {
+        if ((*bulletIt)->getY() < 0 || (*bulletIt)->getY() > 40) {
+            delete *bulletIt;
+            bulletIt = enemyBullets.erase(bulletIt);
+        } else {
+            ++bulletIt;
+        }
+    }
 }
 
 bool Game::isColliding(double x1, double y1, double x2, double y2, double hitbox) {
-    double dx = x1 - x2;
-    double dy = y1 - y2;
-    double distance = sqrt(dx * dx + dy * dy);
-    return distance < hitbox; //pod 1 e hit
+    double dx = x1 - x2; //хоризонтална дистанция
+    double dy = y1 - y2; //вертикална дистанция
+    double distance = sqrt(dx * dx + dy * dy); //теорема на питагор за намиране на разстояние между две точки
+    return distance < hitbox; //ако е по-малко от радиуса на hitboxa значи е ударен
 }

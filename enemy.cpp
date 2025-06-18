@@ -10,7 +10,7 @@ Enemy::Enemy(double x, double y, char symbol, COLORS color, int points) : GameOb
 Enemy::Enemy(const Enemy &other) : GameObject(other), direction(other.direction), points(other.points) {}
 Enemy::Enemy(Enemy &&other) noexcept : GameObject(std::move(other)), direction(other.direction), points(other.points) {}
 
-Enemy &Enemy::operator=(const Enemy &other) {   //copy
+Enemy &Enemy::operator=(const Enemy &other) {
     if (this != &other) {
         GameObject::operator=(other);
         direction = other.direction;
@@ -20,7 +20,7 @@ Enemy &Enemy::operator=(const Enemy &other) {   //copy
     return *this;
 }
 
-Enemy &Enemy::operator=(Enemy &&other) noexcept {   //move
+Enemy &Enemy::operator=(Enemy &&other) noexcept {
     if (this != &other) {
         GameObject::operator=(std::move(other));
         direction = other.direction;
